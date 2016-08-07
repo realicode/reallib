@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.realaicy.lib</groupId>
+    <artifactId>lib-project</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>lib-parent</module>
+        <module>lib-core</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <name>lib-project</name>
+    <url>http://maven.apache.org</url>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${mvnplugin.maven-site-plugin.version}</version>
+                <configuration>
+                    <locales>zh_CN</locales>
+                    <outputEncoding>UTF-8</outputEncoding>
+                    <inputEncoding>UTF-8</inputEncoding>
+                </configuration>
+            </plugin>
+
+            <!-- versions相关插件 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${mvnplugin.versions.version}</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mvnplugin.maven-site-plugin.version>3.5.1</mvnplugin.maven-site-plugin.version>
+        <mvnplugin.versions.version>2.3</mvnplugin.versions.version>
+    </properties>
+</project>
