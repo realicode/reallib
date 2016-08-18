@@ -1,8 +1,7 @@
 package com.realaicy.lib.core.orm.jpa;
 
-import com.realaicy.lib.core.orm.jpa.search.Searchable;
-import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.io.Serializable;
@@ -13,9 +12,10 @@ import java.io.Serializable;
  * @param <T>  the type parameter
  * @param <ID> the type parameter
  */
+@SuppressWarnings("unused")
 @NoRepositoryBean
 public interface BaseRepository<T, ID extends Serializable>
-        extends JpaRepository<T, ID> {
+        extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
 
     /**
      * 根据主键删除
@@ -23,31 +23,4 @@ public interface BaseRepository<T, ID extends Serializable>
      * @param ids xxx
      */
     void delete(ID[] ids);
-
-
-    /**
-     * 根据条件查询所有
-     * 条件 + 分页 + 排序
-     *
-     * @param searchable xxx
-     * @return xxx
-     */
-    Page<T> findAll(Searchable searchable);
-
-
-    /**
-     * 根据条件统计所有记录数
-     *
-     * @param searchable xxx
-     * @return xxx
-     */
-    long count(Searchable searchable);
-
-    /**
-     * 根据条件统计所有记录数
-     *
-     * @param temp XXX
-     * @return XXX
-     */
-    int count(String temp);
 }

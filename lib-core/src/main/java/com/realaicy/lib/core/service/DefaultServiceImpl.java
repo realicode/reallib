@@ -2,10 +2,11 @@ package com.realaicy.lib.core.service;
 
 import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.realaicy.lib.core.orm.AbstractEntity;
-import com.realaicy.lib.core.orm.jpa.search.Searchable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -19,88 +20,103 @@ import java.util.Map;
  * @param <M>  the type parameter
  * @param <ID> the type parameter
  */
+@SuppressWarnings("unused")
+@Transactional
 public class DefaultServiceImpl<M extends AbstractEntity, ID extends Serializable>
         extends ABBaseServiceImpl<M, ID> {
 
     @Override
-    public M get(ID id) {
-        return null;
+    public <S extends M> S save(S entity) {
+        return baseRepository.save(entity);
     }
 
     @Override
-    public List<M> get(Collection<ID> ids) {
-        return null;
+    public <S extends M> List<S> save(Iterable<S> entities) {
+        return baseRepository.save(entities);
     }
 
     @Override
-    public List<M> getAll() {
-        return baseRepository.findAll();
+    public M saveAndFlush(M entity) {
+        return baseRepository.saveAndFlush(entity);
     }
 
     @Override
-    public boolean exists(ID id) {
-        return false;
+    public void delete(M entity) {
+        baseRepository.delete(entity);
     }
 
     @Override
-    public long count() {
-
-        return baseRepository.count();
+    public void deleteById(ID id) {
+        baseRepository.delete(id);
     }
 
     @Override
-    public void save(M o) {
-        baseRepository.save(o);
+    public void deleteByIds(ID[] ids) {
+        //todo
     }
 
     @Override
-    public void save(List<M> mList) {
-        baseRepository.save(mList);
-    }
-
-    @Override
-    public void saveAndFlush(M o) {
-
+    public void deleteInBatch(Collection<M> entities) {
+        baseRepository.deleteInBatch(entities);
     }
 
     @Override
     public void update(M o) {
-
+        //todo
     }
 
     @Override
-    public void remove(M o) {
-
+    public boolean exists(ID id) {
+        //todo
+        return false;
     }
 
     @Override
-    public void removeById(ID id) {
-
+    @Transactional(readOnly = true)
+    public long count() {
+        return baseRepository.count();
     }
 
     @Override
-    public void removeByIds(ID[] ids) {
-
+    @Transactional(readOnly = true)
+    public long count(Specification<M> spec) {
+        return baseRepository.count(spec);
     }
 
     @Override
-    public Page<M> findAll(Pageable pageable) {
-        return null;
+    @Transactional(readOnly = true)
+    public M findOne(ID id) {
+        return baseRepository.findOne(id);
     }
 
     @Override
-    public List<M> findAllWithNoPageNoSort(Searchable searchable) {
-        return null;
+    @Transactional(readOnly = true)
+    public M findOne(Specification<M> spec) {
+        return baseRepository.findOne(spec);
     }
 
     @Override
-    public List<M> findAllWithSort(Searchable searchable) {
-        return null;
+    @Transactional(readOnly = true)
+    public List<M> findAll(Collection<ID> ids) {
+        return baseRepository.findAll(ids);
     }
 
     @Override
-    public Long count(Searchable searchable) {
-        return null;
+    @Transactional(readOnly = true)
+    public List<M> findAll() {
+        return baseRepository.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<M> findAll(Specification<M> spec) {
+        return baseRepository.findAll(spec);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<M> findAll(Specification<M> spec, Pageable pageable) {
+        return baseRepository.findAll(spec, pageable);
     }
 
     @Override
@@ -119,27 +135,9 @@ public class DefaultServiceImpl<M extends AbstractEntity, ID extends Serializabl
     }
 
     @Override
-    public Page<M> findPage(PageRequest pageRequest, List<PropertyFilter> filters, List<PropertyFilter> orfilters) {
-        return null;
-    }
-
-    @Override
-    public M findUniqueBy(String propertyName, Object value) {
-        return null;
-    }
-
-    @Override
     public List<M> find(List<PropertyFilter> filters) {
         return null;
     }
 
-    @Override
-    public List<M> findBy(String propertyName, Object value) {
-        return null;
-    }
 
-    @Override
-    public List<M> findBy(String propertyName, Object value, String orderByProperty, boolean isAsc) {
-        return null;
-    }
 }

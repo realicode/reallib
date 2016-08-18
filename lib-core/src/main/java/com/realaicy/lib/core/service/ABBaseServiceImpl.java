@@ -13,13 +13,13 @@ import java.io.Serializable;
  * @param <M>  the type parameter
  * @param <ID> the type parameter
  */
+@SuppressWarnings("unused")
 public abstract class ABBaseServiceImpl<M extends AbstractEntity, ID extends Serializable>
         implements BaseService<M, ID> {
 
 
     /**
      * XXX
-
      */
     protected BaseRepository<M, ID> baseRepository;
 

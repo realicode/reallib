@@ -1,7 +1,5 @@
 package com.realaicy.lib.core.orm.jpa;
 
-import com.realaicy.lib.core.orm.jpa.search.Searchable;
-import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
@@ -14,13 +12,9 @@ import java.io.Serializable;
  * @param <T>  the type parameter
  * @param <ID> the type parameter
  */
+@SuppressWarnings("unused")
 public class SimpleBaseRepository<T, ID extends Serializable>
         extends SimpleJpaRepository<T, ID> implements BaseRepository<T, ID> {
-
-    /**
-     * FOR TESTONLY
-     */
-    private static final int DUMMYCOUNT = 100;
 
     /**
      * xxx
@@ -42,7 +36,7 @@ public class SimpleBaseRepository<T, ID extends Serializable>
     }
 
     public SimpleBaseRepository(JpaEntityInformation entityInformation,
-                            EntityManager entityManager) {
+                                EntityManager entityManager) {
         super(entityInformation, entityManager);
 
         // Keep the EntityManager around to used from the newly introduced methods.
@@ -52,21 +46,6 @@ public class SimpleBaseRepository<T, ID extends Serializable>
 
     @Override
     public void delete(ID[] ids) {
-
-    }
-
-    @Override
-    public Page<T> findAll(Searchable searchable) {
-        return null;
-    }
-
-    @Override
-    public long count(Searchable searchable) {
-        return 0;
-    }
-
-    @Override
-    public int count(String temp) {
-        return DUMMYCOUNT;
+        //todo
     }
 }

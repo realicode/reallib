@@ -2,10 +2,10 @@ package com.realaicy.lib.core.service;
 
 import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.realaicy.lib.core.orm.AbstractEntity;
-import com.realaicy.lib.core.orm.jpa.search.Searchable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -17,37 +17,15 @@ import java.util.Map;
  * <p/>
  * <p>泛型 ： M 表示实体类型；ID表示主键类型
  * <p/>
- * <p>User: Zhang Kaitao
- * <p>Date: 13-1-12 下午4:43
+ * <p>User: Realaicy
+ * <p>Date: 16-1-12 下午8:43
  * <p>Version: 1.0
  *
  * @param <M>  the type parameter
  * @param <ID> the type parameter
  */
+@SuppressWarnings("unused")
 public interface BaseService<M extends AbstractEntity, ID extends Serializable> {
-
-    /**
-     * 根据ID获得单个对象
-     *
-     * @param id 主键
-     * @return 实体 m
-     */
-    M get(ID id);
-
-    /**
-     * 根据ID集合查询
-     *
-     * @param ids the ids
-     * @return list list
-     */
-    List<M> get(final Collection<ID> ids);
-
-    /**
-     * 获得对象所有集合
-     *
-     * @return all all
-     */
-    List<M> getAll();
 
 
     /**
@@ -66,25 +44,34 @@ public interface BaseService<M extends AbstractEntity, ID extends Serializable> 
     long count();
 
     /**
-     * 保存对象
+     * 根据条件统计实体总数
      *
-     * @param o the o
+     * @return 实体总数 long
      */
-    void save(M o);
+    long count(Specification<M> spec);
+
 
     /**
      * 保存对象
      *
-     * @param mList the m list
+     * @param entity the entity
      */
-    void save(List<M> mList);
+    <S extends M> S save(S entity);
+
+
+    /**
+     * 保存对象
+     *
+     * @param entities the m list
+     */
+    <S extends M> List<S> save(Iterable<S> entities);
 
     /**
      * 保存对象
      *
      * @param o the o
      */
-    void saveAndFlush(M o);
+    M saveAndFlush(M o);
 
     /**
      * 更新对象
@@ -98,55 +85,76 @@ public interface BaseService<M extends AbstractEntity, ID extends Serializable> 
      *
      * @param o the o
      */
-    void remove(M o);
+    void delete(M o);
 
     /**
      * 根据ID删除对象
      *
      * @param id the id
      */
-    void removeById(ID id);
+    void deleteById(ID id);
 
     /**
-     * 批量删除
+     * 批量删除,根据ID
      *
      * @param ids the ids
      */
-    void removeByIds(ID[] ids);
+    void deleteByIds(ID[] ids);
+
+    /**
+     * 批量删除,根据实体
+     *
+     * @param entities the ids
+     */
+
+    void deleteInBatch(Collection<M> entities);
 
 
     /**
-     * 分页及排序查询实体
+     * 根据ID获得单个对象
+     *
+     * @param id 主键
+     * @return 实体 m
+     */
+    M findOne(ID id);
+
+    /**
+     * 根据查询条件获取单个对象.
+     *
+     * @param spec 条件
+     * @return 实体 m
+     */
+    M findOne(Specification<M> spec);
+
+    /**
+     * 根据ID集合查询
+     *
+     * @param ids the ids
+     * @return list list
+     */
+    List<M> findAll(final Collection<ID> ids);
+
+    /**
+     * 获得对象所有集合
+     *
+     * @return all all
+     */
+    List<M> findAll();
+
+    /**
+     * 获得对象所有集合,根据查询条件
+     *
+     * @return all all
+     */
+    List<M> findAll(Specification<M> spec);
+
+    /**
+     * 根据查询条件分页及排序查询实体
      *
      * @param pageable 分页及排序数据
      * @return page page
      */
-    Page<M> findAll(Pageable pageable);
-
-    /**
-     * 按条件不分页不排序查询实体
-     *
-     * @param searchable 条件
-     * @return XXX list
-     */
-    List<M> findAllWithNoPageNoSort(Searchable searchable);
-
-    /**
-     * 按条件排序查询实体(不分页)
-     *
-     * @param searchable 条件
-     * @return XXX list
-     */
-    List<M> findAllWithSort(Searchable searchable);
-
-
-    /**
-     * 按条件分页并排序统计实体数量
-     *
-     * @param searchable 条件
-     * @return XXX long
-     */
-    Long count(Searchable searchable);
+    Page<M> findAll(Specification<M> spec, Pageable pageable);
 
 
     /**
@@ -178,25 +186,6 @@ public interface BaseService<M extends AbstractEntity, ID extends Serializable> 
      */
     Page<M> findPage(final PageRequest pageRequest, final List<PropertyFilter> filters);
 
-    /**
-     * 添加orfilters
-     *
-     * @param pageRequest the page request
-     * @param filters     the filters
-     * @param orfilters   the orfilters
-     * @return page page
-     */
-    Page<M> findPage(final PageRequest pageRequest, final List<PropertyFilter> filters,
-                     final List<PropertyFilter> orfilters);
-
-    /**
-     * 根据属性值查找唯一对象
-     *
-     * @param propertyName the property name
-     * @param value        the value
-     * @return t m
-     */
-    M findUniqueBy(final String propertyName, final Object value);
 
     /**
      * 按照属性条件封装类查询 不分页
@@ -205,26 +194,5 @@ public interface BaseService<M extends AbstractEntity, ID extends Serializable> 
      * @return list list
      */
     List<M> find(List<PropertyFilter> filters);
-
-    /**
-     * 按一个属性查询
-     *
-     * @param propertyName the property name
-     * @param value        the value
-     * @return list list
-     */
-    List<M> findBy(final String propertyName, final Object value);
-
-    /**
-     * 按属性查询,并按某个属性排序
-     *
-     * @param propertyName    the property name
-     * @param value           the value
-     * @param orderByProperty the order by property
-     * @param isAsc           the is asc
-     * @return list list
-     */
-    List<M> findBy(final String propertyName, final Object value, String orderByProperty, boolean isAsc);
-
 
 }
