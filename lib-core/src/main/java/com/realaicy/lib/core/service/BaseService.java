@@ -141,6 +141,8 @@ public interface BaseService<M extends AbstractEntity, ID extends Serializable> 
      */
     List<M> findAll();
 
+    List<M> findAll(Pageable pageable);
+
     /**
      * 获得对象所有集合,根据查询条件
      *
@@ -154,7 +156,15 @@ public interface BaseService<M extends AbstractEntity, ID extends Serializable> 
      * @param pageable 分页及排序数据
      * @return page page
      */
-    Page<M> findAll(Specification<M> spec, Pageable pageable);
+    List<M> findAll(Specification<M> spec, Pageable pageable);
+
+    /**
+     * 根据查询条件分页及排序查询实体
+     *
+     * @param pageable 分页及排序数据
+     * @return page page
+     */
+    //Page<M> findAll(Specification<M> spec, Pageable pageable);
 
 
     /**

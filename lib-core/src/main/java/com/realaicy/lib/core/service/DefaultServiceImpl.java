@@ -62,6 +62,7 @@ public class DefaultServiceImpl<M extends AbstractEntity, ID extends Serializabl
 
     @Override
     public void update(M o) {
+
         //todo
     }
 
@@ -108,6 +109,12 @@ public class DefaultServiceImpl<M extends AbstractEntity, ID extends Serializabl
     }
 
     @Override
+    public List<M> findAll(Pageable pageable) {
+
+        return baseRepository.findAll(pageable).getContent();
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<M> findAll(Specification<M> spec) {
         return baseRepository.findAll(spec);
@@ -115,8 +122,8 @@ public class DefaultServiceImpl<M extends AbstractEntity, ID extends Serializabl
 
     @Override
     @Transactional(readOnly = true)
-    public Page<M> findAll(Specification<M> spec, Pageable pageable) {
-        return baseRepository.findAll(spec, pageable);
+    public List<M> findAll(Specification<M> spec, Pageable pageable) {
+        return baseRepository.findAll(spec, pageable).getContent();
     }
 
     @Override
