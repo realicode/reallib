@@ -127,6 +127,15 @@ public interface BaseService<M extends AbstractEntity, ID extends Serializable> 
     M findOne(Specification<M> spec);
 
     /**
+     * 根据查询条件获取单个对象.
+     *
+     * @param tenantID 租户
+     * @param orgID    组织
+     * @return 实体 m
+     */
+    M findMyTree(Long tenantID, Long orgID);
+
+    /**
      * 根据ID集合查询
      *
      * @param ids the ids

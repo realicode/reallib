@@ -97,6 +97,11 @@ public class DefaultServiceImpl<M extends AbstractEntity, ID extends Serializabl
     }
 
     @Override
+    public M findMyTree(Long tenantID, Long orgID) {
+        return null;
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<M> findAll(Collection<ID> ids) {
         return baseRepository.findAll(ids);
