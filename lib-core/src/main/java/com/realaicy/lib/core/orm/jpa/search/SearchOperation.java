@@ -5,9 +5,9 @@ package com.realaicy.lib.core.orm.jpa.search;
  * 查询操作符
  */
 public enum SearchOperation {
-    EQUALITY, NEGATION, GREATER_THAN, LESS_THAN, LIKE, STARTS_WITH, ENDS_WITH, CONTAINS;
+    EQUALITY, NEGATION, GREATER_THAN, LESS_THAN, LIKE, REALAICY_IN, STARTS_WITH, ENDS_WITH, CONTAINS;
 
-    public static final String[] SIMPLE_OPERATION_SET = {":", "!", ">", "<", "~"};
+    public static final String[] SIMPLE_OPERATION_SET = {":", "!", ">", "<", "~", "$"};
 
     public static SearchOperation getSimpleOperation(char input) {
         switch (input) {
@@ -21,6 +21,8 @@ public enum SearchOperation {
                 return LESS_THAN;
             case '~':
                 return LIKE;
+            case '$':
+                return REALAICY_IN;
             default:
                 return null;
         }

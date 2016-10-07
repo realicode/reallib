@@ -87,7 +87,8 @@ public class DefaultServiceImpl<M extends AbstractEntity, ID extends Serializabl
     @Override
     @Transactional(readOnly = true)
     public M findOne(ID id) {
-        return baseRepository.findOne(id);
+        //return baseRepository.findOne(id);
+        return baseRepository.findOneNonDeleted(id);
     }
 
     @Override

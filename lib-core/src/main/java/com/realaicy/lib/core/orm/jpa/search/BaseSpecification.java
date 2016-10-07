@@ -3,10 +3,9 @@ package com.realaicy.lib.core.orm.jpa.search;
 import com.realaicy.lib.core.orm.AbstractEntity;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
+import java.math.BigInteger;
+import java.util.List;
 
 
 /**
@@ -39,6 +38,10 @@ public class BaseSpecification<T> implements Specification<T> {
                 return builder.lessThan(root.get(criteria.getKey()), criteria.getValue().toString());
             case LIKE:
                 return builder.like(root.get(criteria.getKey()), criteria.getValue().toString());
+            case REALAICY_IN: {
+                Expression<BigInteger> expression = root.get(criteria.getKey());
+                return expression.in((List<BigInteger>) criteria.getValue());
+            }
             case STARTS_WITH:
                 return builder.like(root.get(criteria.getKey()), criteria.getValue() + "%");
             case ENDS_WITH:
