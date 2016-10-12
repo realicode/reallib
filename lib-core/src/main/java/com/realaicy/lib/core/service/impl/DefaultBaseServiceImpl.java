@@ -1,7 +1,10 @@
-package com.realaicy.lib.core.service;
+package com.realaicy.lib.core.service.impl;
 
 import com.fasterxml.jackson.databind.ser.PropertyFilter;
-import com.realaicy.lib.core.orm.AbstractEntity;
+import com.realaicy.lib.core.orm.jpa.BaseRepository;
+import com.realaicy.lib.core.orm.jpa.entity.AbstractEntity;
+import com.realaicy.lib.core.service.BaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,8 +25,33 @@ import java.util.Map;
  */
 @SuppressWarnings("unused")
 @Transactional
-public class DefaultServiceImpl<M extends AbstractEntity, ID extends Serializable>
-        extends ABBaseServiceImpl<M, ID> {
+public class DefaultBaseServiceImpl<M extends AbstractEntity, ID extends Serializable>
+        implements BaseService<M, ID> {
+
+    /**
+     * XXX
+     */
+    protected BaseRepository<M, ID> baseRepository;
+
+    /**
+     * Sets base repository.
+     *
+     * @param baseRepository the base repository
+     */
+    @Autowired
+    public void setBaseRepository(BaseRepository<M, ID> baseRepository) {
+        this.baseRepository = baseRepository;
+    }
+
+    /**
+     * Getter for property 'baseRepository'.
+     *
+     * @return Value for property 'baseRepository'.
+     */
+    public BaseRepository<M, ID> getBaseRepository() {
+        return baseRepository;
+    }
+
 
     @Override
     public <S extends M> S save(S entity) {
@@ -63,13 +91,18 @@ public class DefaultServiceImpl<M extends AbstractEntity, ID extends Serializabl
     @Override
     public void update(M o) {
 
-        //todo
+        baseRepository.save(o);
     }
 
     @Override
     public boolean exists(ID id) {
         //todo
         return false;
+    }
+
+    @Override
+    public Boolean existName(String name) {
+        return baseRepository.existName(name);
     }
 
     @Override
@@ -84,11 +117,12 @@ public class DefaultServiceImpl<M extends AbstractEntity, ID extends Serializabl
         return baseRepository.count(spec);
     }
 
+
     @Override
     @Transactional(readOnly = true)
     public M findOne(ID id) {
-        //return baseRepository.findOne(id);
-        return baseRepository.findOneNonDeleted(id);
+        return baseRepository.findOne(id);
+        //return baseRepository.findOneNonDeleted(id);
     }
 
     @Override

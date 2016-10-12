@@ -1,7 +1,7 @@
 package com.realaicy.lib.core.service;
 
 import com.fasterxml.jackson.databind.ser.PropertyFilter;
-import com.realaicy.lib.core.orm.AbstractEntity;
+import com.realaicy.lib.core.orm.jpa.entity.AbstractEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -37,6 +37,14 @@ public interface BaseService<M extends AbstractEntity, ID extends Serializable> 
     boolean exists(ID id);
 
     /**
+     * 实体是否存在
+     *
+     * @param name 主键
+     * @return 存在 返回true，否则false
+     */
+    Boolean existName(String name);
+
+    /**
      * 统计实体总数
      *
      * @return 实体总数 long
@@ -56,6 +64,7 @@ public interface BaseService<M extends AbstractEntity, ID extends Serializable> 
      *
      * @param entity the entity
      */
+
     <S extends M> S save(S entity);
 
 
@@ -167,12 +176,6 @@ public interface BaseService<M extends AbstractEntity, ID extends Serializable> 
      */
     List<M> findAll(Specification<M> spec, Pageable pageable);
 
-    /**
-     * 根据查询条件分页及排序查询实体
-     *
-     * @param pageable 分页及排序数据
-     * @return page page
-     */
     //Page<M> findAll(Specification<M> spec, Pageable pageable);
 
 

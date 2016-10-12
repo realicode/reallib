@@ -1,14 +1,11 @@
 package com.realaicy.lib.core.orm.jpa;
 
-import org.springframework.data.jpa.repository.query.QueryUtils;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Realaicy on 2015/5/14.
@@ -53,6 +50,7 @@ public class SimpleBaseRepository<T, ID extends Serializable>
         //todo
     }
 
+    @SuppressWarnings("unchecked")
     public T findOneNonDeleted(ID id) {
         Assert.notNull(id, "The given id must not be null!");
         Class domainType = this.getDomainClass();
@@ -61,5 +59,15 @@ public class SimpleBaseRepository<T, ID extends Serializable>
                 setParameter("id", id).setParameter("deleteFlag", false).getSingleResult();
 
     }
+
+    @Override
+    public Boolean existName(String name) {
+        int count = Integer.parseInt(entityManager.createQuery("select count(*) from " + this.getDomainClass().getName() +
+                " e where e.name=:name").
+                setParameter("name", name).getSingleResult().toString());
+        return count >= 1;
+
+    }
+
 
 }

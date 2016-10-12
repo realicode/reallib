@@ -1,6 +1,5 @@
 package com.realaicy.lib.core.orm.jpa.search;
 
-import com.realaicy.lib.core.orm.AbstractEntity;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;

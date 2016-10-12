@@ -1,6 +1,6 @@
 package com.realaicy.lib.web;
 
-import com.realaicy.lib.core.orm.AbstractEntity;
+import com.realaicy.lib.core.orm.jpa.entity.AbstractEntity;
 import com.realaicy.lib.core.service.BaseService;
 
 import java.io.Serializable;

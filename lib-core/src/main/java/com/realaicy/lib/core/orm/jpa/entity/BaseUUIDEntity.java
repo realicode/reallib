@@ -1,6 +1,5 @@
-package com.realaicy.lib.core.orm.jpa;
+package com.realaicy.lib.core.orm.jpa.entity;
 
-import com.realaicy.lib.core.orm.AbstractEntity;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.id.UUIDGenerator;

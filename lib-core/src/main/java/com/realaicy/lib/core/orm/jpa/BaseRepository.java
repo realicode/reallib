@@ -2,11 +2,9 @@ package com.realaicy.lib.core.orm.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by Realaicy on 2015/5/14.
@@ -27,5 +25,7 @@ public interface BaseRepository<T, ID extends Serializable>
     void delete(ID[] ids);
 
     public T findOneNonDeleted(ID id);
+
+    public Boolean existName(String name);
 
 }

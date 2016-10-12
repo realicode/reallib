@@ -1,6 +1,4 @@
-package com.realaicy.lib.core.orm.jpa;
-
-import com.realaicy.lib.core.orm.AbstractEntity;
+package com.realaicy.lib.core.orm.jpa.entity;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

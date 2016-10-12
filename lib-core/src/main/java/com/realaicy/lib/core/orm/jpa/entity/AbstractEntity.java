@@ -1,4 +1,4 @@
-package com.realaicy.lib.core.orm;
+package com.realaicy.lib.core.orm.jpa.entity;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.data.domain.Persistable;
