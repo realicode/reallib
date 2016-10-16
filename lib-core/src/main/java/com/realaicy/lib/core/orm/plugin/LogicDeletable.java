@@ -23,4 +23,9 @@ public interface LogicDeletable {
      */
     public void markDeleted();
 
+    /**
+     * 标识为已删除
+     */
+    public void markUnDeleted();
+
 }

@@ -28,7 +28,7 @@ public abstract class CommonEntity<ID extends Serializable> extends BaseEntity<I
      */
     @Column(name = "CREATETIME")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
     /**

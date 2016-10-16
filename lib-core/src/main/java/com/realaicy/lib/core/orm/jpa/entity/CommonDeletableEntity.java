@@ -18,11 +18,16 @@ public abstract class CommonDeletableEntity<ID extends Serializable> extends Com
      * 逻辑删除标志
      */
     @Column(name = "F_DELETED")
-    private Boolean deleteFlag;
+    private Boolean deleteFlag = false;
 
     @Override
     public void markDeleted() {
         this.setDeleteFlag(true);
+    }
+
+    @Override
+    public void markUnDeleted() {
+        this.setDeleteFlag(false);
     }
 
     public Boolean getDeleteFlag() {
