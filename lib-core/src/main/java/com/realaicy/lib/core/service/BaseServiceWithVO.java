@@ -7,7 +7,7 @@ import com.realaicy.lib.core.orm.plugin.CommonData;
 import java.io.Serializable;
 
 public interface BaseServiceWithVO<M extends BaseEntity<ID> & CommonData<ID>,
-        ID extends Serializable, V extends BaseVO>
+        ID extends Serializable, V extends BaseVO<ID>>
         extends BaseService<M, ID> {
 
     void saveFromVO(M po, V vo);
