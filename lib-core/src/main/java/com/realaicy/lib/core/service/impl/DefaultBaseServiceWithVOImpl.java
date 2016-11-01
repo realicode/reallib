@@ -19,7 +19,6 @@ import static com.realaicy.lib.core.utils.RealBeanUtils.getNullPropertyNames;
  * @param <ID> the type parameter
  */
 @SuppressWarnings({"unused"})
-@Transactional
 public class DefaultBaseServiceWithVOImpl<M extends BaseEntity<ID> & CommonData<ID>
         , ID extends Serializable, V extends BaseVO<ID>>
         extends DefaultBaseServiceImpl<M, ID>

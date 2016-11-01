@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 /**
  * Created by Realaicy on 2015/5/14.
@@ -24,8 +25,12 @@ public interface BaseRepository<T, ID extends Serializable>
      */
     void delete(ID[] ids);
 
-    public T findOneNonDeleted(ID id);
+    T findOneNonDeleted(ID id);
 
-    public Boolean existName(String name);
+    Boolean existName(String name);
+
+    T findByNameWithInAParent(String name, BigInteger pid);
+
+    T findByOrgIDAndOrgRootFlagAndDeleteFlag(BigInteger orgID, Boolean orgRootFlag, Boolean deleteFlag);
 
 }

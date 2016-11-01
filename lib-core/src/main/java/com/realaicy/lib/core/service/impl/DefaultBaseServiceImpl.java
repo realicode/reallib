@@ -24,7 +24,7 @@ import java.util.Map;
  * @param <ID> the type parameter
  */
 @SuppressWarnings("unused")
-@Transactional
+//@Transactional
 public class DefaultBaseServiceImpl<M extends AbstractEntity, ID extends Serializable>
         implements BaseService<M, ID> {
 

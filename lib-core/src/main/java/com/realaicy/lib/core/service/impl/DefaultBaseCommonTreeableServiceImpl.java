@@ -20,7 +20,6 @@ import java.util.Date;
  * @param <ID> the type parameter
  */
 @SuppressWarnings({"unused"})
-@Transactional
 public class DefaultBaseCommonTreeableServiceImpl<M extends BaseEntity<ID> &
         CommonData<ID> & Treeable<ID>, ID extends Serializable>
         extends DefaultBaseCommonServiceImpl<M, ID>

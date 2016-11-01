@@ -18,7 +18,6 @@ import java.util.Date;
  * @param <ID> the type parameter
  */
 @SuppressWarnings({"unused"})
-@Transactional
 public class DefaultBaseCommonServiceImpl<M extends BaseEntity<ID> & CommonData<ID>
         , ID extends Serializable>
         extends DefaultBaseServiceImpl<M, ID>

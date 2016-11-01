@@ -1,11 +1,15 @@
 package com.realaicy.lib.core.orm.jpa;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Table;
 import java.io.Serializable;
+import java.math.BigInteger;
 
 /**
  * Created by Realaicy on 2015/5/14.
@@ -17,6 +21,7 @@ import java.io.Serializable;
 public class SimpleBaseRepository<T, ID extends Serializable>
         extends SimpleJpaRepository<T, ID> implements BaseRepository<T, ID> {
 
+    Logger logger = LoggerFactory.getLogger(SimpleBaseRepository.class);
     /**
      * xxx
      */
@@ -69,5 +74,32 @@ public class SimpleBaseRepository<T, ID extends Serializable>
 
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public T findByNameWithInAParent(String name, BigInteger pid) {
+
+        String tableNameOfEntityClass = this.getDomainClass().getAnnotation(Table.class).name();
+        logger.info("tableNameOfEntityClass:{}", tableNameOfEntityClass);
+        String sql = "select * from " + tableNameOfEntityClass +
+                " as t where t.NAME='" + name + "'" + " and t.PID='" + pid + "'" + " and t.F_DELETED=0";
+        logger.info("sql:{}", sql);
+
+        try {
+            return (T) entityManager.createNativeQuery(sql).getSingleResult();
+        } catch (javax.persistence.NoResultException ex) {
+            logger.info("NoResultException");
+            return null;
+        }
+    }
+
+    @Override
+    public T findByOrgIDAndOrgRootFlagAndDeleteFlag(BigInteger orgID, Boolean orgRootFlag, Boolean deleteFlag) {
+
+        //noinspection unchecked
+        return (T) entityManager.createQuery("select e from " + this.getDomainClass().getName() +
+                " e where e.orgID=:orgID and e.orgRootFlag=:orgRootFlag and e.deleteFlag=:deleteFlag").
+                setParameter("orgID", orgID).setParameter("orgRootFlag", orgRootFlag)
+                .setParameter("deleteFlag", deleteFlag).getSingleResult();
+    }
 
 }

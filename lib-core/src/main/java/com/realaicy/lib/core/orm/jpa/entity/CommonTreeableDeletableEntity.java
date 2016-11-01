@@ -15,8 +15,8 @@ import java.io.Serializable;
  * @param <ID> the type parameter
  */
 @MappedSuperclass
-public abstract class CommonTreeableDeletableEntity<ID extends Serializable>
-        extends CommonTreeableEntity<ID> implements LogicDeletable {
+public abstract class CommonTreeableDeletableEntity<ID extends Serializable, M extends CommonEntity<ID>>
+        extends CommonTreeableEntity<ID, M> implements LogicDeletable {
 
     @Override
     public void markDeleted() {

@@ -17,7 +17,6 @@ import java.io.Serializable;
  * @param <ID> the type parameter
  */
 @SuppressWarnings({"unused"})
-@Transactional
 public class DefaultBaseCommonTreeableDeletableServiceImpl<M extends BaseEntity<ID> &
         CommonData<ID> & Treeable<ID> & LogicDeletable, ID extends Serializable>
         extends DefaultBaseCommonTreeableServiceImpl<M, ID>

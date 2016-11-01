@@ -1,10 +1,10 @@
 package com.realaicy.lib.core.orm.jpa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.realaicy.lib.core.orm.plugin.Treeable;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -16,8 +16,8 @@ import java.io.Serializable;
  * @param <ID> the type parameter
  */
 @MappedSuperclass
-public abstract class CommonTreeableEntity<ID extends Serializable>
-        extends CommonEntity<ID> implements Treeable<ID>{
+public abstract class CommonTreeableEntity<ID extends Serializable, M extends CommonEntity<ID>>
+        extends CommonEntity<ID> implements Treeable<ID> {
 
     /**
      * 树形结构层级
@@ -46,20 +46,34 @@ public abstract class CommonTreeableEntity<ID extends Serializable>
      * 是否显示
      */
     @Column(name = "IS_SHOW")
-    private Boolean isShow;
+    private Boolean show;
     /**
      * 资源是否是叶子节点
      */
     @Column(name = "IS_FOLDER")
     @JsonProperty("folder")
-    private Boolean isFolder;
+    private Boolean folder;
     /**
      * 资源是否自动展开子孙节点
      */
     @Column(name = "IS_AUTO_EXPAND")
     @JsonProperty("expanded")
-    private Boolean isAutoExpand;
+    private Boolean autoExpand;
+    /**
+     * 父亲菜单对象
+     */
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "PID")
+    @JsonIgnore
+    private M parent;
 
+    public M getParent() {
+        return parent;
+    }
+
+    public void setParent(M parent) {
+        this.parent = parent;
+    }
 
     public String getResIcon() {
         return resIcon;
@@ -86,27 +100,27 @@ public abstract class CommonTreeableEntity<ID extends Serializable>
     }
 
     public Boolean getShow() {
-        return isShow;
+        return show;
     }
 
     public void setShow(Boolean show) {
-        isShow = show;
+        this.show = show;
     }
 
     public Boolean getFolder() {
-        return isFolder;
+        return folder;
     }
 
     public void setFolder(Boolean folder) {
-        isFolder = folder;
+        this.folder = folder;
     }
 
     public Boolean getAutoExpand() {
-        return isAutoExpand;
+        return autoExpand;
     }
 
     public void setAutoExpand(Boolean autoExpand) {
-        isAutoExpand = autoExpand;
+        this.autoExpand = autoExpand;
     }
 
     public String getCascadeID() {
